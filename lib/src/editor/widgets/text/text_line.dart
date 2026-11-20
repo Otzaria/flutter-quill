@@ -887,7 +887,7 @@ class RenderEditableTextLine extends RenderEditableBox {
   EdgeInsets? _resolvedPadding;
   bool? _containsCursor;
   List<TextBox>? _selectedRects;
-  late Rect _caretPrototype;
+  Rect _caretPrototype = Rect.zero;
   InlineCodeStyle inlineCodeStyle;
   BoxDecoration? decoration;
   final Map<TextLineSlot, RenderBox> children = <TextLineSlot, RenderBox>{};
@@ -957,7 +957,8 @@ class RenderEditableTextLine extends RenderEditableBox {
       cursorCont.addListener(markNeedsLayout);
       cursorCont.color.addListener(safeMarkNeedsPaint);
       _attachedToCursorController = true;
-      if (!wasAttachedToCursorController) {
+      if (!wasAttachedToCursorController &&
+          _caretPrototype.width != cursorWidth) {
         markNeedsLayout();
       }
     }
